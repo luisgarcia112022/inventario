@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa de Inventario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        form input[type="text"],
+        form input[type="number"] {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        form button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table tbody tr:hover {
+            background-color: #ddd;
+        }
+        table button {
+            padding: 8px 12px;
+            border: none;
+            background-color: #f44336;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        table button:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Programa de Inventario</h1>
+
+    <form id="inventory-form">
+        <label for="item-name">Nombre del Artículo:</label>
+        <input type="text" id="item-name" required>
+        <label for="item-quantity">Cantidad:</label>
+        <input type="number" id="item-quantity" required>
+        <button type="submit">Agregar Artículo</button>
+    </form>
+
+    <h2>Lista de Inventario</h2>
+    <table id="inventory-table">
+        <thead>
+            <tr>
+                <th>Nombre del Artículo</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('inventory-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const itemName = document.getElementById('item-name').value;
+            const itemQuantity = document.getElementById('item-quantity').value;
+
+            if (itemName && itemQuantity) {
+                addItemToTable(itemName, itemQuantity);
+                document.getElementById('inventory-form').reset();
+            }
+        });
+
+        function addItemToTable(name, quantity) {
+            const tableBody = document.querySelector('#inventory-table tbody');
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${quantity}</td>
+                <td><button onclick="removeItem(this)">Eliminar</button></td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+
+        function removeItem(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+    </script>
+</body>
+</html>
